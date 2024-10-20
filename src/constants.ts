@@ -3,6 +3,7 @@ export enum ERROR_MESSAGES {
   notFound = "User not found", //get, put, delete
   notReqFields = "Request body doesn't contain required fields", //post
   internalErr = "Unexpected error has occurred on the server side",
+  nonExistingEndPoint = "Non-existing endpoint"
 }
 
 export enum HTTP_STATUS_CODE {
