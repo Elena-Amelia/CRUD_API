@@ -31,19 +31,26 @@ export function getUser(id: IUser["id"]) {
   let statusCode: number;
 
   if (validateID(id)) {
-    db.forEach((elem: IUser) => {
-      if (elem.id === id) {
-        foundUser = elem;
-        statusCode = HTTP_STATUS_CODE.OK;
-      } else {
-        foundUser = { error: ERROR_MESSAGES.notFound };
-        statusCode = HTTP_STATUS_CODE.NotFound;
+    if (db.length === 0) {
+      foundUser = { error: ERROR_MESSAGES.notFound };
+      statusCode = HTTP_STATUS_CODE.NotFound;
+    } else {
+      for (let i = 0; i < db.length; i++) {
+        if (db[i].id === id) {
+          foundUser = db[i];
+          statusCode = HTTP_STATUS_CODE.OK;
+          break;
+        } else {
+          foundUser = { error: ERROR_MESSAGES.notFound };
+          statusCode = HTTP_STATUS_CODE.NotFound;
+        }
       }
-    });
+    }
   } else {
     foundUser = { error: ERROR_MESSAGES.invalidID };
     statusCode = HTTP_STATUS_CODE.BadRequest;
   }
+
   return { foundUser, statusCode };
 }
 
@@ -60,7 +67,7 @@ export function createUser(userData: IUser | null) {
 
   if (validation.isValid) {
     const id = v4();
-    let user = Object.assign({}, userData);
+    const user = Object.assign({}, userData);
     user.id = id;
     db.push(user);
     newUser = user;
@@ -76,36 +83,40 @@ export function createUser(userData: IUser | null) {
 export function updateUser(id: IUser["id"], userData: IUser | null) {
   let updatedUser: IUser | IError;
   let statusCode: number;
-  let user: IUser | IError;
 
   if (validateID(id)) {
-    db.forEach((elem: IUser) => {
-      if (elem.id === id) {
-        user = elem;
+    if (db.length === 0) {
+      updatedUser = { error: ERROR_MESSAGES.notFound };
+      statusCode = HTTP_STATUS_CODE.NotFound;
+    } else {
+      for (let i = 0; i < db.length; i++) {
+        if (db[i].id === id) {
+          const validation = validatePartReqData(userData);
 
-        const validation = validatePartReqData(userData);
+          if (validation.isValid) {
+            if (userData.username !== undefined) {
+              db[i].username = userData.username;
+            }
+            if (userData.age !== undefined) {
+              db[i].age = userData.age;
+            }
+            if (userData.hobbies !== undefined) {
+              db[i].hobbies = userData.hobbies;
+            }
 
-        if (validation.isValid) {
-          if (userData.username) {
-            elem.username = userData.username;
+            updatedUser = db[i];
+            statusCode = HTTP_STATUS_CODE.OK;
+            break;
+          } else {
+            updatedUser = { error: validation.validMessage.join(", ") };
+            statusCode = HTTP_STATUS_CODE.BadRequest;
           }
-          if (userData.age) {
-            elem.age = userData.age;
-          }
-          if (userData.hobbies) {
-            elem.hobbies = userData.hobbies;
-          }
-          updatedUser = elem;
-          statusCode = HTTP_STATUS_CODE.OK;
         } else {
-          updatedUser = { error: validation.validMessage.join(", ") };
-          statusCode = HTTP_STATUS_CODE.BadRequest;
+          updatedUser = { error: ERROR_MESSAGES.notFound };
+          statusCode = HTTP_STATUS_CODE.NotFound;
         }
-      } else {
-        updatedUser = { error: ERROR_MESSAGES.notFound };
-        statusCode = HTTP_STATUS_CODE.NotFound;
       }
-    });
+    }
   } else {
     updatedUser = { error: ERROR_MESSAGES.invalidID };
     statusCode = HTTP_STATUS_CODE.BadRequest;
@@ -119,19 +130,25 @@ export function deleteUser(id: IUser["id"]) {
   let statusCode: number;
 
   if (validateID(id)) {
-    db.forEach((elem: IUser, ind: number) => {
-      if (elem.id === id) {
-        db.splice(ind, 1);
-        deletedUser = {};
-        statusCode = HTTP_STATUS_CODE.NoContent;
-      } else {
-        deletedUser = { error: ERROR_MESSAGES.notFound };
-        statusCode = HTTP_STATUS_CODE.NotFound;
+    if (db.length === 0) {
+      deletedUser = { error: ERROR_MESSAGES.notFound };
+      statusCode = HTTP_STATUS_CODE.NotFound;
+    } else {
+      for (let i = 0; i < db.length; i++) {
+        if (db[i].id === id) {
+          db.splice(i, 1);
+          deletedUser = {};
+          statusCode = HTTP_STATUS_CODE.NoContent;
+          break;
+        } else {
+          deletedUser = { error: ERROR_MESSAGES.notFound };
+          statusCode = HTTP_STATUS_CODE.NotFound;
+        }
       }
-    });
+    }
   } else {
     deletedUser = { error: ERROR_MESSAGES.invalidID };
     statusCode = HTTP_STATUS_CODE.BadRequest;
   }
-  return{deletedUser, statusCode }
+  return { deletedUser, statusCode };
 }

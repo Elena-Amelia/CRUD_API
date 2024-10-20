@@ -2,7 +2,7 @@ export enum ERROR_MESSAGES {
   invalidID = "UserId is invalid", //get, put, delete
   notFound = "User not found", //get, put, delete
   notReqFields = "Request body doesn't contain required fields", //post
-  internalErr = "Unexpected error has occurred, try again later",
+  internalErr = "Unexpected error has occurred on the server side",
 }
 
 export enum HTTP_STATUS_CODE {
