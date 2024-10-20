@@ -91,19 +91,25 @@ export function updateUser(id: IUser["id"], userData: IUser | null) {
     } else {
       for (let i = 0; i < db.length; i++) {
         if (db[i].id === id) {
-          const validation = validatePartReqData(userData);
+          const validation = validateFullReqData(userData);
 
           if (validation.isValid) {
-            if (userData.username !== undefined) {
+            // if (userData.username !== undefined) {
+            //   db[i].username = userData.username;
+            // }
+            // if (userData.age !== undefined) {
+            //   db[i].age = userData.age;
+            // }
+            // if (userData.hobbies !== undefined) {
+            //   db[i].hobbies = userData.hobbies;
+            // }
+            
               db[i].username = userData.username;
-            }
-            if (userData.age !== undefined) {
+            
               db[i].age = userData.age;
-            }
-            if (userData.hobbies !== undefined) {
+                       
               db[i].hobbies = userData.hobbies;
-            }
-
+            
             updatedUser = db[i];
             statusCode = HTTP_STATUS_CODE.OK;
             break;

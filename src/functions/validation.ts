@@ -10,7 +10,7 @@ export function validateFullReqData(userData: IUser | null) {
 
   if (userData === null) {
     isValid = false;
-    validMessage = ["the request doesn't contain valid data"];
+    validMessage = ["the request contains invalid data"];
   } else {
     let messageArr = [];
     let message: string;
@@ -23,7 +23,7 @@ export function validateFullReqData(userData: IUser | null) {
     }
 
     if (userData.username === undefined) {
-      message = "the request doesn't contain field username";
+      message = "the request doesn't contain required field username";
       messageArr.push(message);
     } else {
       if (typeof userData.username !== "string") {
@@ -33,7 +33,7 @@ export function validateFullReqData(userData: IUser | null) {
     }
 
     if (userData.age === undefined) {
-      message = "the request doesn't contain field age";
+      message = "the request doesn't contain required field age";
       messageArr.push(message);
     } else {
       if (typeof userData.age !== "number") {
@@ -43,7 +43,7 @@ export function validateFullReqData(userData: IUser | null) {
     }
 
     if (userData.hobbies === undefined) {
-      message = "the request doesn't contain field hobbies";
+      message = "the request doesn't contain required field hobbies";
       messageArr.push(message);
     } else {
       if (!Array.isArray(userData.hobbies)) {
@@ -80,7 +80,7 @@ export function validatePartReqData(userData: IUser | null) {
 
   if (userData === null) {
     isValid = false;
-    validMessage = ["the request doesn't contain valid data"];
+    validMessage = ["the request contains invalid data"];
   } else {
     let messageArr = [];
     let message: string;

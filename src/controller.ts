@@ -1,6 +1,3 @@
-// import path from "node:path";
-// import url from "node:url";
-// import fs from "node:fs";
 import { IncomingMessage, ServerResponse } from "node:http";
 import { HTTP_METHODS, HTTP_STATUS_CODE, ERROR_MESSAGES } from "./constants";
 import { HttpResponse } from "./types";
