@@ -10,7 +10,7 @@ export function validateFullReqData(userData: IUser | null) {
 
   if (userData === null) {
     isValid = false;
-    validMessage = ["the request contains invalid data"];
+    validMessage = ["the request doesn't contain valid data"];
   } else {
     let messageArr = [];
     let message: string;
@@ -80,7 +80,7 @@ export function validatePartReqData(userData: IUser | null) {
 
   if (userData === null) {
     isValid = false;
-    validMessage = ["the request contains invalid data"];
+    validMessage = ["the request doesn't contain valid data"];
   } else {
     let messageArr = [];
     let message: string;

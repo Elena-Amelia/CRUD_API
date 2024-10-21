@@ -40,7 +40,7 @@ export async function controller(req: IncomingMessage, res: ServerResponse) {
           if (id) {
             result = {
               error:
-                "You are not allowed to send id to endpoint in method POST",
+                "The endpoint doesn't exist in method POST. Please, send to api/users."
             };
             statusCode = HTTP_STATUS_CODE.NotFound;
           } else {

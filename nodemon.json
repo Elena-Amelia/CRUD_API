@@ -2,6 +2,6 @@
 {
     "ignore": ["node_modules"],
     "watch": ["src/index.ts"],
-    "exec": "node --loader ts-node/esm src/index.ts",
+    "exec": "node --no-warnings=ExperimentalWarning --loader ts-node/esm src/index.ts",
     "ext": "ts, js"
 }
