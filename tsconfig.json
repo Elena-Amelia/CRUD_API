@@ -1,0 +1,16 @@
+{
+   "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+   },
+   "ts-node": {
+    "experimentalSpecifierResolution": "node",
+    "esm": true,
+    
+   },
+   "include": ["src/**/*"],
+   "exclude": ["node_modules", "dist", "webpack.config.cjs"],
+   "lib": ["ESNext"]
+}
